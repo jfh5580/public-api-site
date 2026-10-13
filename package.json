@@ -1,0 +1,26 @@
+{
+  "name": "public-api-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "보험사 공시 조회·목록 브리핑 (개인 학습용)",
+  "engines": { "node": ">=18.18.0" },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fast-xml-parser": "4.5.1",
+    "fflate": "0.8.2",
+    "next": "15.1.12",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.7",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
+    "typescript": "5.7.3"
+  }
+}
