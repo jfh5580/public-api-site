@@ -68,7 +68,12 @@ function ensureArray<T>(v: T | T[] | undefined): T[] {
 
 async function loadCorpCodes(key: string): Promise<void> {
   const res = await dartFetch("corpCode.xml", { crtfc_key: key });
-  const buf = new Uint8Array(await res.arrayBuffer());
+  let buf: Uint8Array;
+  try {
+    buf = new Uint8Array(await res.arrayBuffer());
+  } catch {
+    throw new ApiError("error", "network", "Open DART 고유번호 파일 수신 중 연결 실패 또는 시간 초과입니다.", 502);
+  }
 
   // 정상 응답은 ZIP("PK"). 아니면 상태 XML/텍스트다.
   if (!(buf[0] === 0x50 && buf[1] === 0x4b)) {

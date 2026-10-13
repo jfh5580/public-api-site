@@ -10,6 +10,10 @@ export function failure(e: unknown, extra: Record<string, unknown> = {}) {
   if (e instanceof ApiError) {
     return json({ state: e.state, reason: e.reason, message: e.message, ...extra }, e.http);
   }
+  // 진단용: 오류 종류와 키를 가린 메시지 앞부분만 서버 로그에 남긴다(응답에는 넣지 않는다).
+  const name = e instanceof Error ? e.name : typeof e;
+  const msg = (e instanceof Error ? e.message : "").replace(/(crtfc_key|key)=[^&\s"]+/gi, "$1=***").slice(0, 120);
+  console.error(`[unexpected] ${name}: ${msg}`);
   return json(
     { state: "error", reason: "upstream", message: "처리 중 알 수 없는 오류가 발생했습니다.", ...extra },
     500,
